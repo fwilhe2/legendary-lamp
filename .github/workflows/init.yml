@@ -23,4 +23,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: test
       run: |
-        PGPASS=postgres psql -h localhost -p ${{ job.services.postgres.ports[5432] }} -U postgres -c "show tables" postgres
+        PGPASSWORD=postgres psql -h localhost -p ${{ job.services.postgres.ports[5432] }} -U postgres -c "show tables" postgres
