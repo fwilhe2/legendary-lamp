@@ -5,7 +5,7 @@ on:
       statement:
         description: 'put some sql here'     
         required: true
-        default: 'create table a(x int); select * from a;'
+        default: 'select * from us_states;'
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -23,6 +23,9 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - uses: actions/checkout@v2
+    - run: |
+        wget https://github.com/pthom/northwind_psql/raw/master/northwind.sql
+        PGPASSWORD=postgres psql -h localhost -p ${{ job.services.postgres.ports[5432] }} -U postgres postgres -f northwind.sql
     - name: test
       run: |
         PGPASSWORD=postgres psql -h localhost -p ${{ job.services.postgres.ports[5432] }} -U postgres postgres <<EOF
