@@ -5,7 +5,7 @@ on:
       statement:
         description: 'put some sql here'     
         required: true
-        default: 'create table a(x char(2)); insert into a values("a"); select * from a;'
+        default: 'create table a(x int); select * from a;'
 jobs:
   build:
     runs-on: ubuntu-20.04
