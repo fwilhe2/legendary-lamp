@@ -1,14 +1,11 @@
 name: CI
 on:
-  push:
   workflow_dispatch:
     inputs:
       statement:
         description: 'put some sql here'     
         required: true
         default: 'create table a(x char(2)); insert into a values("a"); select * from a;'
-  repository_dispatch:
-    types: changeme
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -30,5 +27,5 @@ jobs:
       run: |
         PGPASSWORD=postgres psql -h localhost -p ${{ job.services.postgres.ports[5432] }} -U postgres postgres <<EOF
         \x
-        ${{ github.event.inputs.logLevel }}
+        ${{ github.event.inputs.statement }}
         EOF
